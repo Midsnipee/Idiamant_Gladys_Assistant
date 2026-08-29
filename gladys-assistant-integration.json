@@ -1,0 +1,76 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "Netatmo iDiamant",
+  "description": {
+    "en": "Control your Bubendorff shutters through the Netatmo iDiamant gateway.",
+    "fr": "Pilotez vos volets Bubendorff via la passerelle Netatmo iDiamant."
+  },
+  "version": "1.0.0",
+  "docker_image": "ghcr.io/midsnipee/idiamant_gladys_assistant:1.0.0",
+  "gladys_version": ">=4.86.0",
+  "categories": ["appliances", "climate"],
+  "transports": ["cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": { "en": "Create your Netatmo application", "fr": "Créez votre application Netatmo" },
+      "description": {
+        "en": "Your shutters must already be set up in the Home + Control app. Then sign in to dev.netatmo.com with the SAME account, open My Apps, and create an application. Copy its client ID and client secret below, and paste the redirect URI shown by Gladys into the application settings.",
+        "fr": "Vos volets doivent déjà être configurés dans l'application Home + Control. Connectez-vous ensuite sur dev.netatmo.com avec le MÊME compte, ouvrez My Apps et créez une application. Recopiez son client ID et son client secret ci-dessous, et collez l'URL de redirection affichée par Gladys dans les paramètres de l'application."
+      },
+      "links": [
+        { "url": "https://dev.netatmo.com/apps/createanapp", "label": { "en": "Create a Netatmo app", "fr": "Créer une application Netatmo" } },
+        { "url": "https://dev.netatmo.com/apidocumentation/control", "label": { "en": "Home + Control API", "fr": "API Home + Control" } }
+      ]
+    },
+    {
+      "key": "client_id",
+      "type": "string",
+      "label": { "en": "Client ID", "fr": "Client ID" },
+      "placeholder": { "en": "5f1a2b3c4d5e6f7a8b9c0d1e", "fr": "5f1a2b3c4d5e6f7a8b9c0d1e" },
+      "required": true
+    },
+    {
+      "key": "client_secret",
+      "type": "secret",
+      "label": { "en": "Client secret", "fr": "Client secret" },
+      "required": true
+    },
+    {
+      "key": "account",
+      "type": "oauth2",
+      "label": { "en": "Netatmo account", "fr": "Compte Netatmo" }
+    },
+    {
+      "key": "poll_interval",
+      "type": "select",
+      "label": { "en": "Refresh interval", "fr": "Fréquence de rafraîchissement" },
+      "default": "60",
+      "options": [
+        { "value": "30", "label": { "en": "Every 30 seconds", "fr": "Toutes les 30 secondes" } },
+        { "value": "60", "label": { "en": "Every minute", "fr": "Toutes les minutes" } },
+        { "value": "300", "label": { "en": "Every 5 minutes", "fr": "Toutes les 5 minutes" } },
+        { "value": "900", "label": { "en": "Every 15 minutes", "fr": "Tous les quarts d'heure" } }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "label": { "en": "Test the connection", "fr": "Tester la connexion" },
+      "timeout_seconds": 30
+    },
+    {
+      "key": "refresh_now",
+      "label": { "en": "Refresh states now", "fr": "Rafraîchir les états maintenant" },
+      "timeout_seconds": 30
+    },
+    {
+      "key": "preferred_position",
+      "label": { "en": "Send all shutters to their preferred position", "fr": "Mettre tous les volets en position préférée" },
+      "timeout_seconds": 30
+    }
+  ]
+}
